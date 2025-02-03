@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Movies to Watch</title>
+
+    <!-- Dodanie favicon -->
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/73/Flat_tick_icon.svg">
+
+    <!-- Alternatywnie, jeśli masz favicon.ico -->
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script>
+        function addMovie() {
+            let title = document.getElementById("title").value;
+            let year = document.getElementById("year").value;
+            let actors = document.getElementById("actors").value;
+
+            if (title === "" || year === "" || actors === "") {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            let li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
+                <div>
+                    <input type="checkbox" class="form-check-input me-2"> 
+                    <strong>${title}</strong> (${year}), <em>${actors}</em>
+                </div>
+                <button class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">❌</button>
+            `;
+
+            document.getElementById("movieList").appendChild(li);
+
+            document.getElementById("title").value = "";
+            document.getElementById("year").value = "";
+            document.getElementById("actors").value = "";
+        }
+
+        function deleteSelected() {
+            let list = document.getElementById("movieList");
+            let items = list.getElementsByTagName("li");
+
+            for (let i = items.length - 1; i >= 0; i--) {
+                let checkbox = items[i].querySelector("input[type='checkbox']");
+                if (checkbox.checked) {
+                    list.removeChild(items[i]);
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h1 class="text-center mb-4 text-primary">🎬 My Favorite Movies</h1>
+
+                <h3 class="text-secondary">Titles</h3>
+                <ul id="movieList" class="list-group mb-3">
+                    <!-- Lista startuje pusta -->
+                </ul>
+                <button class="btn btn-danger mb-4" onclick="deleteSelected()">🗑️ Delete Selected</button>
+
+                <h3 class="text-secondary">Add Movie</h3>
+                <div class="mb-3">
+                    <label class="form-label">Title:</label>
+                    <input type="text" id="title" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Year:</label>
+                    <input type="number" id="year" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Actors:</label>
+                    <input type="text" id="actors" class="form-control">
+                </div>
+                <button class="btn btn-success w-100" onclick="addMovie()">➕ Add Movie</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 text-muted">
+        &copy; My Movie Database. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
